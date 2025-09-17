@@ -1,0 +1,85 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run ESLint
+      run: npm run lint
+      
+    - name: TypeScript type checking
+      run: npx tsc --noEmit
+      
+    - name: Check code formatting
+      run: |
+        # Check if code is properly formatted
+        npx prettier --check "src/**/*.{ts,js,css,html}" || echo "Code formatting issues found"
+        
+    - name: Run tests with coverage
+      run: npm test -- --coverage
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  bundle-analysis:
+    name: Bundle Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build extension
+      run: npm run build
+      
+    - name: Analyze bundle size
+      run: |
+        echo "## Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
+        echo "| File | Size |" >> $GITHUB_STEP_SUMMARY
+        echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+        ls -la dist/*.js | awk '{print "| " $9 " | " $5 " bytes |"}' >> $GITHUB_STEP_SUMMARY
+        
+    - name: Check bundle size limits
+      run: |
+        # Check if any bundle exceeds 1MB
+        for file in dist/*.js; do
+          size=$(stat -c%s "$file")
+          if [ $size -gt 1048576 ]; then
+            echo "Warning: $file is larger than 1MB ($size bytes)"
+            exit 1
+          fi
+        done

@@ -1,0 +1,97 @@
+name: Release Package
+
+on:
+  push:
+    branches: [ main ]
+    types: [ closed ]
+  workflow_dispatch:
+    inputs:
+      create_package:
+        description: 'Create release package'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  check-merge:
+    name: Check if merged to main
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    outputs:
+      is-merge: ${{ steps.check.outputs.is-merge }}
+    
+    steps:
+    - name: Check if this is a merge commit
+      id: check
+      run: |
+        if [ "${{ github.event.head_commit.message }}" = *"Merge pull request"* ]; then
+          echo "is-merge=true" >> $GITHUB_OUTPUT
+        else
+          echo "is-merge=false" >> $GITHUB_OUTPUT
+        fi
+
+  package:
+    name: Package Extension
+    runs-on: ubuntu-latest
+    needs: check-merge
+    if: |
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.create_package == 'true') ||
+      (github.event_name == 'push' && needs.check-merge.outputs.is-merge == 'true')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run tests
+      run: npm test
+      
+    - name: Run linter
+      run: npm run lint
+      
+    - name: Build extension
+      run: npm run build
+      
+    - name: Package extension
+      run: npm run package
+      
+    - name: Create zip package
+      run: |
+        cd packages
+        zip -r youtube-karaoke-extension-v1.0.0.zip youtube-karaoke-extension-v1.0.0/
+        
+    - name: Upload package artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: extension-package-${{ github.sha }}
+        path: packages/
+        retention-days: 30
+        
+    - name: Create GitHub Release
+      if: github.event_name == 'push'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          packages/youtube-karaoke-extension-v1.0.0.zip
+        tag_name: v${{ github.run_number }}
+        name: Release v${{ github.run_number }}
+        body: |
+          ## Changes
+          - Automated release package created from merge to main
+          - Build: ${{ github.sha }}
+          - Workflow: ${{ github.workflow }}
+          
+          ## Download
+          Download the extension package from the assets below.
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
