@@ -237,9 +237,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Email**: support@youtubekaraoke.com
-- **GitHub**: [Issues](https://github.com/your-repo/issues)
-- **Discord**: [Community Server](https://discord.gg/your-server)
+- **Email**: sounghwan.shin@outlook.com
+- **GitHub**: [Issues](https://github.com/Youtube_Karaoke_Chrome_Extension/issues)
 
 ---
 
