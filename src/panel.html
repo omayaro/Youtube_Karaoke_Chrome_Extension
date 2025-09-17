@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Karaoke Panel</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="panel-container">
+    <div class="panel-header">
+      <h3>YouTube Karaoke</h3>
+      <button id="close-panel" class="close-btn">&times;</button>
+    </div>
+    
+    <div class="panel-content">
+      <div class="playlist-section">
+        <h4>Playlist</h4>
+        <div id="playlist-items" class="playlist-items">
+          <p class="empty-message">No videos in playlist</p>
+        </div>
+      </div>
+      
+      <div class="search-section">
+        <h4>Search YouTube</h4>
+        <div class="search-controls">
+          <input type="text" id="search-input" placeholder="Search for videos..." />
+          <button id="search-btn">Search</button>
+        </div>
+        <div id="search-results" class="search-results">
+          <p class="empty-message">Enter a search term to find videos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="panel.js"></script>
+</body>
+</html>

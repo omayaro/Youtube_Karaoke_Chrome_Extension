@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Karaoke Extension Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #1976d2;
+        }
+        .step {
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        .step-number {
+            background: #1976d2;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .feature {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        .feature h3 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+        .feature p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 YouTube Karaoke Extension Test Page</h1>
+        
+        <div class="instructions">
+            <h2>How to Test the Extension:</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Load the Extension:</strong> Go to <code>brave://extensions/</code> and click "Load unpacked", then select the <code>dist</code> folder.
+            </div>
+            
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Open the Panel:</strong> Click the extension icon in the toolbar and then click "Toggle Panel".
+            </div>
+            
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Test Search:</strong> In the bottom section, search for songs like "karaoke", "instrumental", or your favorite artist.
+            </div>
+            
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Add to Playlist:</strong> Click the "Add" button on search results to add them to your playlist.
+            </div>
+            
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Manage Playlist:</strong> Use the controls in the top section to play, remove, reorder, or shuffle your playlist. The panel will automatically appear on YouTube pages!
+            </div>
+        </div>
+        
+        <div class="feature-list">
+            <div class="feature">
+                <h3>🔍 Smart Search</h3>
+                <p>Search YouTube with filters for relevance, date, rating, and view count. Get instant results with thumbnails and metadata.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>📋 Playlist Management</h3>
+                <p>Add, remove, reorder, shuffle, and clear your playlist. All changes are automatically saved locally.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>▶️ Direct YouTube Navigation</h3>
+                <p>Click any video to navigate directly to YouTube. The left panel automatically appears on YouTube pages for playlist management!</p>
+            </div>
+            
+            <div class="feature">
+                <h3>💾 Persistent Storage</h3>
+                <p>Your playlists are saved locally and persist across browser sessions. Never lose your favorite karaoke songs!</p>
+            </div>
+            
+            <div class="feature">
+                <h3>🎨 Modern UI</h3>
+                <p>Beautiful, responsive interface with smooth animations and intuitive controls designed for the best user experience.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>🔔 Smart Notifications</h3>
+                <p>Get instant feedback with success, warning, and error notifications for all your actions.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>🎬 Easy Video Control</h3>
+                <p>Click the X button on the video player to close it and return to your playlist management.</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f0f8ff; border-radius: 10px;">
+            <h3 style="color: #1976d2; margin: 0 0 10px 0;">Ready to Test!</h3>
+            <p style="margin: 0 0 15px 0; color: #666;">Load the extension and start building your karaoke playlist. The panel will appear on the left side of this page.</p>
+            <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50;">
+                <h4 style="color: #2e7d32; margin: 0 0 10px 0;">✨ New Feature: Content Shifting</h4>
+                <p style="margin: 0; color: #2e7d32; font-size: 14px;">When you open the panel, this page content will smoothly shift to the right to make room for the panel. When you close it, the content will shift back to center!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
