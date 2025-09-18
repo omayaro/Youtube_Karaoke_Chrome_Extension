@@ -41,4 +41,4 @@ export class PanelManager {
 }
 
 // Initialize panel manager
-const panelManager = new PanelManager();
+// const panelManager = new PanelManager();
