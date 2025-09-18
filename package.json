@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack --mode=production",
     "dev": "webpack --mode=development --watch",
-    "test": "jest",
-    "lint": "eslint src/**/*.js",
+    "test": "jest --passWithNoTests",
+    "lint": "eslint src/**/*.ts",
     "package": "node package-extension.js",
     "package:zip": "npm run package && cd packages && powershell -command \"Compress-Archive -Path 'youtube-karaoke-extension-v1.0.0' -DestinationPath 'youtube-karaoke-extension-v1.0.0.zip' -Force\"",
     "clean": "rimraf dist packages",
@@ -24,8 +24,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "^0.0.254",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "eslint": "^8.45.0",

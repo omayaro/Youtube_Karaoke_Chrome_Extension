@@ -2,12 +2,12 @@
 console.log('YouTube Karaoke Extension content script loaded');
 
 // Check if content script already loaded to prevent duplicates
-if ((window as any).youtubeKaraokeLoaded) {
+if ((window as unknown as { youtubeKaraokeLoaded?: boolean }).youtubeKaraokeLoaded) {
   console.log('YouTube Karaoke content script already loaded, skipping...');
   // Exit early to prevent duplicate execution
   throw new Error('Content script already loaded');
 }
-(window as any).youtubeKaraokeLoaded = true;
+(window as unknown as { youtubeKaraokeLoaded: boolean }).youtubeKaraokeLoaded = true;
 
 // Check if panel already exists
 let panel: HTMLElement | null = null;
@@ -492,9 +492,6 @@ function setupPlaylistEventListeners(): void {
 
 // Play video by navigating to YouTube while keeping panel visible
 function playVideo(videoId: string): void {
-  // Store current panel state
-  const panelVisible = isPanelVisible;
-  
   // Update current playing video
   currentPlayingVideoId = videoId;
   
@@ -592,41 +589,6 @@ async function performSearch(query: string, order: string = 'relevance'): Promis
   }
 }
 
-// Mock YouTube search (replace with real API call)
-async function mockYouTubeSearch(query: string, order: string): Promise<SearchResult[]> {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  // Mock search results
-  const mockResults: SearchResult[] = [
-    {
-      videoId: 'dQw4w9WgXcQ',
-      title: `${query} - Karaoke Version`,
-      channel: 'Karaoke Channel',
-      thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
-      duration: '3:32',
-      description: 'Perfect for karaoke!'
-    },
-    {
-      videoId: 'jNQXAC9IVRw',
-      title: `${query} - Instrumental`,
-      channel: 'Instrumental Music',
-      thumbnail: 'https://img.youtube.com/vi/jNQXAC9IVRw/mqdefault.jpg',
-      duration: '4:15',
-      description: 'High quality instrumental version'
-    },
-    {
-      videoId: '9bZkp7q19f0',
-      title: `${query} - Official Music Video`,
-      channel: 'Official Artist',
-      thumbnail: 'https://img.youtube.com/vi/9bZkp7q19f0/mqdefault.jpg',
-      duration: '2:58',
-      description: 'Original music video with lyrics'
-    }
-  ];
-  
-  return mockResults;
-}
 
 // Perform real YouTube search using logged-in user session
 async function performRealYouTubeSearch(query: string, order: string): Promise<SearchResult[]> {

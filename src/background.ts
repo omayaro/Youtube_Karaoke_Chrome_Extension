@@ -20,32 +20,32 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('Background received message:', request);
   
   switch (request.action) {
-    case 'getPlaylists':
-      chrome.storage.local.get(['playlists'], (result) => {
-        sendResponse({ playlists: result.playlists || [] });
-      });
-      return true; // Keep message channel open for async response
-      
-    case 'savePlaylist':
-      chrome.storage.local.set({ playlists: request.playlists }, () => {
-        sendResponse({ success: true });
-      });
-      return true;
-      
-    case 'togglePanel':
-      // Send message to content script to toggle panel
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs[0] && tabs[0].id) {
-          chrome.tabs.sendMessage(tabs[0].id, { action: 'togglePanel' });
-        }
-      });
+  case 'getPlaylists':
+    chrome.storage.local.get(['playlists'], (result) => {
+      sendResponse({ playlists: result.playlists || [] });
+    });
+    return true; // Keep message channel open for async response
+    
+  case 'savePlaylist':
+    chrome.storage.local.set({ playlists: request.playlists }, () => {
       sendResponse({ success: true });
-      return true;
-      
-    default:
-      console.log('Unknown action:', request.action);
-      sendResponse({ success: false });
-      return true;
+    });
+    return true;
+    
+  case 'togglePanel':
+    // Send message to content script to toggle panel
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0] && tabs[0].id) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'togglePanel' });
+      }
+    });
+    sendResponse({ success: true });
+    return true;
+    
+  default:
+    console.log('Unknown action:', request.action);
+    sendResponse({ success: false });
+    return true;
   }
 });
 
