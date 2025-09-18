@@ -26,6 +26,13 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
+    - name: Debug ESLint installation
+      run: |
+        echo "Checking ESLint installation..."
+        npx eslint --version
+        echo "Checking TypeScript ESLint packages..."
+        npm list @typescript-eslint/eslint-plugin @typescript-eslint/parser
+      
     - name: Run linter
       run: npm run lint
       
