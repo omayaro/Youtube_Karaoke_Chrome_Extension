@@ -24,7 +24,7 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: npm install
       
     - name: Debug ESLint installation
       run: |
@@ -58,7 +58,7 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: npm install
       
     - name: Build extension
       run: npm run build
@@ -87,7 +87,7 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: npm install
       
     - name: Build and package extension
       run: |
