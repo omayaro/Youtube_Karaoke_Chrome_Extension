@@ -384,6 +384,36 @@ body.youtube-karaoke-panel-open #player-container {
   border-color: #1976d2;
 }
 
+.search-item.selected {
+  background: #e3f2fd;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.playlist-item.selected {
+  background: #e8f5e8;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.playlist-item.playing {
+  background: #fff3e0;
+  border-color: #ff9800;
+  box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.3);
+  position: relative;
+}
+
+.playlist-item.playing::before {
+  content: "▶";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff9800;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 .add-btn {
   background: #ff9800;
   color: white;
@@ -901,6 +931,29 @@ body.youtube-karaoke-panel-open #player-container {
 
 .add-btn:hover {
   background: #f57c00;
+}
+
+.add-btn.large {
+  padding: 20px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 50px;
+  width: 50px;
+  height: 60px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.add-btn.large:hover {
+  background: #f57c00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .remove-btn {
