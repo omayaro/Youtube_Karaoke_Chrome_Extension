@@ -8,6 +8,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   // Initialize storage
   chrome.storage.local.set({
     playlists: [],
+    searchResults: [],
     settings: {
       panelWidth: 300,
       theme: 'light'
@@ -28,6 +29,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     
   case 'savePlaylist':
     chrome.storage.local.set({ playlists: request.playlists }, () => {
+      sendResponse({ success: true });
+    });
+    return true;
+    
+  case 'getSearchResults':
+    console.log('Getting search results from storage');
+    chrome.storage.local.get(['searchResults'], (result) => {
+      console.log('Retrieved search results:', result.searchResults?.length || 0, 'results');
+      sendResponse({ searchResults: result.searchResults || [] });
+    });
+    return true;
+    
+  case 'saveSearchResults':
+    console.log('Saving search results to storage:', request.searchResults?.length || 0, 'results');
+    chrome.storage.local.set({ searchResults: request.searchResults }, () => {
+      console.log('Search results saved to storage');
       sendResponse({ success: true });
     });
     return true;
