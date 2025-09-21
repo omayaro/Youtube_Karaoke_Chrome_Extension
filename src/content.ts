@@ -1,6 +1,6 @@
 // Content script for YouTube Karaoke Extension
-import { PlaylistManager, PlaylistItem } from './contentPlaylist';
-import { SearchManager, SearchResult } from './contentSearchResult';
+import { PlaylistManager } from './contentPlaylist';
+import { SearchManager } from './contentSearchResult';
 
 console.log('YouTube Karaoke Extension content script loaded');
 
@@ -318,7 +318,8 @@ function setupEventListeners(): void {
   
   // Apply filters
   applyFiltersBtn?.addEventListener('click', () => {
-    const filters = searchManager.getAdvancedFilters();
+    // Get filters to ensure they're applied (even though we don't use the variable)
+    searchManager.getAdvancedFilters();
     searchManager.performSearch(searchInput?.value || '', searchFilter?.value || 'relevance');
     if (advancedFiltersPanel) {
       const panel = advancedFiltersPanel as HTMLElement;
@@ -332,8 +333,9 @@ function setupEventListeners(): void {
   });
 
   // Listen for add to playlist events
-  document.addEventListener('addToPlaylist', (e: any) => {
-    const { searchItem } = e.detail;
+  document.addEventListener('addToPlaylist', (e: Event) => {
+    const customEvent = e as CustomEvent;
+    const { searchItem } = customEvent.detail;
     playlistManager.addToPlaylist(searchItem);
   });
 }

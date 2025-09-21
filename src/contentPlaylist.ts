@@ -1,4 +1,5 @@
 // Playlist management functionality for YouTube Karaoke Extension
+import { SearchManager } from './contentSearchResult';
 
 export interface PlaylistItem {
   videoId: string;
@@ -13,7 +14,7 @@ export class PlaylistManager {
   private panel: HTMLElement | null = null;
   private playlists: PlaylistItem[] = [];
   private currentPlayingVideoId: string | null = null;
-  private searchManager: any = null; // Reference to search manager for panel tracking
+  private searchManager: SearchManager | null = null; // Reference to search manager for panel tracking
 
   constructor(panel: HTMLElement | null) {
     this.panel = panel;
@@ -25,7 +26,7 @@ export class PlaylistManager {
   }
 
   // Set search manager reference for panel tracking
-  setSearchManager(searchManager: any): void {
+  setSearchManager(searchManager: SearchManager): void {
     this.searchManager = searchManager;
   }
 
@@ -182,8 +183,8 @@ export class PlaylistManager {
         
         // Set last focused panel to playlist
         if (this.searchManager) {
-          this.searchManager.lastFocusedPanel = 'playlist';
-          this.searchManager.forceSearchPanel = false; // Clear force search panel flag
+          this.searchManager.setLastFocusedPanel('playlist');
+          this.searchManager.setForceSearchPanel(false); // Clear force search panel flag
           console.log('Playlist item clicked, lastFocusedPanel set to playlist, forceSearchPanel set to false');
         }
         
@@ -226,7 +227,7 @@ export class PlaylistManager {
   }
 
   // Add video to playlist
-  addToPlaylist(searchItem: any): void {
+  addToPlaylist(searchItem: { videoId: string; title: string; channel: string; thumbnail: string; duration?: string }): void {
     const playlistItem: PlaylistItem = {
       videoId: searchItem.videoId,
       title: searchItem.title,
@@ -351,8 +352,8 @@ export class PlaylistManager {
     
     // Set last focused panel to playlist
     if (this.searchManager) {
-      this.searchManager.lastFocusedPanel = 'playlist';
-      this.searchManager.forceSearchPanel = false; // Clear force search panel flag
+      this.searchManager.setLastFocusedPanel('playlist');
+      this.searchManager.setForceSearchPanel(false); // Clear force search panel flag
       console.log('Playlist panel focused, lastFocusedPanel set to playlist, forceSearchPanel set to false');
     }
     

@@ -543,6 +543,15 @@ export class SearchManager {
     });
   }
 
+  // Public methods for accessing private properties
+  setLastFocusedPanel(panel: 'search' | 'playlist'): void {
+    this.lastFocusedPanel = panel;
+  }
+
+  setForceSearchPanel(force: boolean): void {
+    this.forceSearchPanel = force;
+  }
+
   // Save search results to storage
   saveSearchResults(): void {
     console.log('saveSearchResults called, results count:', this.searchResults.length);
