@@ -36,6 +36,8 @@ export class SearchManager {
   // Set search results
   setSearchResults(results: SearchResult[]): void {
     this.searchResults = results;
+    // Save search results to storage so they persist across page navigation
+    this.saveSearchResults();
   }
 
   // Get search results
@@ -66,7 +68,8 @@ export class SearchManager {
     try {
       // Use real YouTube search using logged-in user session
       const realResults = await this.performRealYouTubeSearch(query, order);
-      this.searchResults = realResults;
+      console.log('Search completed, got', realResults.length, 'results');
+      this.setSearchResults(realResults); // This will save to storage
       this.displaySearchResults(realResults);
       
       if (statusContainer) {
@@ -229,6 +232,7 @@ export class SearchManager {
 
   // Display search results
   displaySearchResults(results: SearchResult[]): void {
+    console.log('displaySearchResults called with', results.length, 'results');
     const resultsContainer = this.panel?.querySelector('#search-results');
     if (!resultsContainer) return;
     
@@ -536,6 +540,48 @@ export class SearchManager {
     const checkboxes = this.panel.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
     checkboxes.forEach(checkbox => {
       checkbox.checked = false;
+    });
+  }
+
+  // Save search results to storage
+  saveSearchResults(): void {
+    console.log('saveSearchResults called, results count:', this.searchResults.length);
+    if (this.searchResults.length > 0) {
+      chrome.runtime.sendMessage({ 
+        action: 'saveSearchResults', 
+        searchResults: this.searchResults 
+      }, (response) => {
+        console.log('Save response:', response);
+        if (response && response.success) {
+          console.log('Search results saved successfully');
+        } else {
+          console.log('Failed to save search results');
+        }
+      });
+    } else {
+      console.log('No search results to save');
+    }
+  }
+
+  // Load search results from storage
+  loadSearchResults(): void {
+    console.log('loadSearchResults called');
+    chrome.runtime.sendMessage({ action: 'getSearchResults' }, (response) => {
+      console.log('Storage response:', response);
+      if (response && response.searchResults && response.searchResults.length > 0) {
+        this.searchResults = response.searchResults;
+        this.displaySearchResults(this.searchResults);
+        
+        // Update search status to show loaded results
+        const statusContainer = this.panel?.querySelector('#search-status');
+        if (statusContainer) {
+          statusContainer.textContent = `Loaded ${this.searchResults.length} results from previous search`;
+        }
+        
+        console.log('Search results loaded from storage:', this.searchResults.length, 'results');
+      } else {
+        console.log('No search results found in storage or empty response');
+      }
     });
   }
 }

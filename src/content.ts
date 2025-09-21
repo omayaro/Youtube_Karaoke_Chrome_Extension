@@ -215,6 +215,9 @@ function injectPanel(): void {
   // Load existing playlists
   loadPlaylists();
   
+  // Load existing search results
+  searchManager.loadSearchResults();
+  
   // Make sure panel stays visible on YouTube pages
   if (window.location.hostname.includes('youtube.com')) {
     // Adjust panel for YouTube page
@@ -355,11 +358,15 @@ function togglePanel(): void {
     console.log('Toggling panel visibility to:', isPanelVisible);
     
     if (isPanelVisible) {
+      console.log('Panel becoming visible, loading search results');
       panel.style.display = 'block';
       shiftMainContent(true);
       // Check if current YouTube video is in playlist
       checkCurrentYouTubeVideo();
+      // Load search results when panel becomes visible
+      searchManager.loadSearchResults();
     } else {
+      console.log('Panel becoming hidden');
       panel.style.display = 'none';
       shiftMainContent(false);
     }
