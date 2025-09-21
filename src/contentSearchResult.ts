@@ -81,9 +81,20 @@ export class SearchManager {
         <div class="error-state">
           <div class="error-icon">⚠️</div>
           <p class="error-message">Search failed. Please try again.</p>
-          <button class="retry-btn" onclick="performSearch('${query}', '${order}')">Retry</button>
         </div>
       `;
+      
+      // Add Retry button programmatically to prevent injection
+      const errorState = resultsContainer.querySelector('.error-state');
+      if (errorState) {
+        const retryBtn = document.createElement('button');
+        retryBtn.className = 'retry-btn';
+        retryBtn.textContent = 'Retry';
+        retryBtn.addEventListener('click', () => {
+          this.performSearch(query, order);
+        });
+        errorState.appendChild(retryBtn);
+      }
       
       if (statusContainer) {
         statusContainer.textContent = 'Search failed';
