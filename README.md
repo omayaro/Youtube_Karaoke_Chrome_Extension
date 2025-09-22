@@ -34,11 +34,14 @@ Transform YouTube into a karaoke experience with a powerful split-panel interfac
 - Keyboard shortcuts for power users
 
 ### ⌨️ **Keyboard Shortcuts**
-- `Ctrl/Cmd + K` - Focus search
+- `Ctrl/Cmd + 1` - Focus search panel
+- `Ctrl/Cmd + 2` - Focus playlist panel
+- `Ctrl/Cmd + K` - Focus search input
 - `Escape` - Close panel
-- `Space` - Play/pause
-- `Arrow Keys` - Navigate playlist
-- `Delete` - Remove selected item
+- `Enter` - Perform search (when search focused)
+- `Space` - Play/pause current video (when not in input field)
+- `↑/↓ Arrow Keys` - Navigate playlist items (when not in input field)
+- `Delete/Backspace` - Remove selected playlist item (when not in input field)
 
 ## 🚀 Quick Start
 
